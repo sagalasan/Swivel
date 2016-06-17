@@ -1,5 +1,4 @@
-/*
-* Copyright 2016 Christiaan Martinez
+/* Copyright 2016 Christiaan Martinez
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -13,35 +12,13 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
+package com.sagalasan.swivel.control;
 
-package com.sagalasan.swivel;
-
-import javafx.application.Application;
-import javafx.stage.Stage;
+import com.google.inject.Inject;
 
 /**
- * Entry point of Swivel.
- *
  * @author Christiaan Martinez
  */
-public class Swivel extends Application
+public abstract class Controller
 {
-  private AppController appController;
-
-  @Override
-  public void init()
-  {
-    appController = new AppController();
-  }
-
-  @Override
-  public void start(Stage primaryStage) throws Exception
-  {
-    appController.start(primaryStage);
-  }
-
-  public static void main(String[] args)
-  {
-    launch(args);
-  }
 }

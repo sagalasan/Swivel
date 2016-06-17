@@ -13,35 +13,17 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
+package com.sagalasan.swivel.injection;
 
-package com.sagalasan.swivel;
-
-import javafx.application.Application;
-import javafx.stage.Stage;
+import com.google.inject.AbstractModule;
 
 /**
- * Entry point of Swivel.
- *
  * @author Christiaan Martinez
  */
-public class Swivel extends Application
-{
-  private AppController appController;
+public class SwivelModule extends AbstractModule {
 
   @Override
-  public void init()
-  {
-    appController = new AppController();
-  }
+  protected void configure() {
 
-  @Override
-  public void start(Stage primaryStage) throws Exception
-  {
-    appController.start(primaryStage);
-  }
-
-  public static void main(String[] args)
-  {
-    launch(args);
   }
 }

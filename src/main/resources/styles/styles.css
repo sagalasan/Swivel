@@ -1,0 +1,8 @@
+.navbar {
+    -fx-background-color: #212121;
+}
+
+.navbar > #clockLabel {
+    -fx-text-fill: whitesmoke;
+    -fx-font-size: 54;
+}

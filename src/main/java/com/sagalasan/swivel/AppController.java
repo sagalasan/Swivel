@@ -13,35 +13,41 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-
 package com.sagalasan.swivel;
 
-import javafx.application.Application;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.sagalasan.swivel.injection.SwivelModule;
+import com.sagalasan.swivel.verticle.GuiVerticle;
+import io.vertx.core.Vertx;
 import javafx.stage.Stage;
 
 /**
- * Entry point of Swivel.
- *
  * @author Christiaan Martinez
  */
-public class Swivel extends Application
+public class AppController
 {
-  private AppController appController;
+  private Stage stage;
+  private Injector injector;
 
-  @Override
-  public void init()
+  private Vertx vertx;
+  private GuiVerticle guiVerticle;
+
+
+  public AppController()
   {
-    appController = new AppController();
+    injector = Guice.createInjector(new SwivelModule());
+    vertx = Vertx.vertx();
+    guiVerticle = new GuiVerticle();
+    vertx.deployVerticle(guiVerticle, (res) ->
+    {
+      System.out.println("guiVerticle deployed");
+    });
   }
 
-  @Override
-  public void start(Stage primaryStage) throws Exception
+  public void start(Stage stage) throws Exception
   {
-    appController.start(primaryStage);
+    this.stage = stage;
   }
 
-  public static void main(String[] args)
-  {
-    launch(args);
-  }
 }
