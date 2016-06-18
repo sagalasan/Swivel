@@ -42,7 +42,6 @@ public class MainController extends Controller
   @Override
   public void onCurrentTimeReceived(long time)
   {
-    System.out.println(time);
     Platform.runLater(() -> clockLabel.setText(new SimpleDateFormat("HH:mm").format(time)));
   }
 }
