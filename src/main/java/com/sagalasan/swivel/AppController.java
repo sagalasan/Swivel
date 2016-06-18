@@ -21,7 +21,6 @@ import com.sagalasan.swivel.control.Controller;
 import com.sagalasan.swivel.control.MainController;
 import com.sagalasan.swivel.injection.SwivelModule;
 import com.sagalasan.swivel.service.ServiceVerticle;
-import com.sagalasan.swivel.verticle.GuiVerticle;
 import com.sagalasan.swivel.view.FxmlManager;
 import io.vertx.core.Vertx;
 import javafx.application.Platform;
@@ -41,7 +40,6 @@ public class AppController
   private Injector injector;
 
   private Vertx vertx;
-  private GuiVerticle guiVerticle;
 
   private ServiceVerticle serviceVerticle;
 
@@ -59,15 +57,9 @@ public class AppController
   {
     this.stage = stage;
     stage.setOnCloseRequest(e -> close());
-    guiVerticle = new GuiVerticle();
     serviceVerticle = new ServiceVerticle();
 
     onPreStart();
-
-    vertx.deployVerticle(guiVerticle, res ->
-    {
-      System.out.println("guiVerticle deployed");
-    });
 
     vertx.deployVerticle(serviceVerticle, res ->
     {
