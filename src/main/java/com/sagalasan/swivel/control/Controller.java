@@ -15,10 +15,26 @@
 package com.sagalasan.swivel.control;
 
 import com.google.inject.Inject;
+import com.sagalasan.swivel.service.CurrentTimeService;
+import io.vertx.core.Vertx;
+import io.vertx.core.VertxOptions;
 
 /**
  * @author Christiaan Martinez
  */
 public abstract class Controller
 {
+  private Vertx vertx;
+
+  @Inject
+  public void setVertx(Vertx vertx)
+  {
+    this.vertx = vertx;
+    vertx.eventBus().consumer(CurrentTimeService.class.getName(), handler ->
+    {
+      onCurrentTimeReceived((long) handler.body());
+    });
+  }
+
+  public void onCurrentTimeReceived(long time) { }
 }

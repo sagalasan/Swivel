@@ -12,26 +12,27 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
+package com.sagalasan.swivel.service;
 
-package com.sagalasan.swivel.control;
-
-import javafx.application.Platform;
-import javafx.fxml.FXML;
-import javafx.scene.text.Text;
-
-import java.text.SimpleDateFormat;
+import io.vertx.core.Future;
 
 /**
  * @author Christiaan Martinez
  */
-public class TimeSceneController extends Controller
+public class CurrentTimeService extends MicroVerticle
 {
-  @FXML
-  private Text timeText;
+  private long timerId;
 
   @Override
-  public void onCurrentTimeReceived(long time)
+  public void start(Future<Void> future)
   {
-    Platform.runLater(() -> timeText.setText(new SimpleDateFormat("HH:mm:ss").format(time)));
+    timerId = vertx.setPeriodic(1000, handler -> vertx.eventBus().publish(this.getClass().getName(), System.currentTimeMillis()));
+    complete(future);
+  }
+
+  @Override
+  public void stop()
+  {
+    vertx.cancelTimer(timerId);
   }
 }

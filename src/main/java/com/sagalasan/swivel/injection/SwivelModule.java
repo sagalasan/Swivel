@@ -16,6 +16,7 @@
 package com.sagalasan.swivel.injection;
 
 import com.google.inject.AbstractModule;
+import io.vertx.core.Vertx;
 
 /**
  * @author Christiaan Martinez
@@ -24,6 +25,6 @@ public class SwivelModule extends AbstractModule {
 
   @Override
   protected void configure() {
-
+    bind(Vertx.class).toInstance(Vertx.vertx());
   }
 }

@@ -1,4 +1,5 @@
-/* Copyright 2016 Christiaan Martinez
+/*
+* Copyright 2016 Christiaan Martinez
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -12,26 +13,22 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
+package com.sagalasan.swivel.message;
 
-package com.sagalasan.swivel.control;
-
-import javafx.application.Platform;
-import javafx.fxml.FXML;
-import javafx.scene.text.Text;
-
-import java.text.SimpleDateFormat;
+import io.vertx.core.json.JsonObject;
 
 /**
  * @author Christiaan Martinez
  */
-public class TimeSceneController extends Controller
+public class Message implements JsonObjectSerializable
 {
-  @FXML
-  private Text timeText;
+  public static final String HELLO = "HELLO";
+
+  private String hello = "";
 
   @Override
-  public void onCurrentTimeReceived(long time)
+  public JsonObject toJson()
   {
-    Platform.runLater(() -> timeText.setText(new SimpleDateFormat("HH:mm:ss").format(time)));
+    return new JsonObject().put(HELLO, hello);
   }
 }

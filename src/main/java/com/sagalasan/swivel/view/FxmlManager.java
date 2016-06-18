@@ -14,35 +14,32 @@
 * limitations under the License.
 */
 
-package com.sagalasan.swivel;
+package com.sagalasan.swivel.view;
 
-import javafx.application.Application;
-import javafx.stage.Stage;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+
+import java.io.IOException;
 
 /**
- * Entry point of Swivel.
- *
  * @author Christiaan Martinez
  */
-public class Swivel extends Application
+public class FxmlManager
 {
-  private AppController appController;
+  public static final String MAIN_FXML = "/main.fxml";
+  public static final String TIME_SCENE_FXML = "/time_scene.fxml";
 
-  @Override
-  public void init()
+  public static Parent loadFxml(FXMLLoader loader, String path)
   {
-
-  }
-
-  @Override
-  public void start(Stage primaryStage) throws Exception
-  {
-    appController = new AppController();
-    appController.start(primaryStage);
-  }
-
-  public static void main(String[] args)
-  {
-    launch(args);
+    Parent parent;
+    try
+    {
+      parent = loader.load(FxmlManager.class.getResource(path).openStream());
+    } catch (IOException e)
+    {
+      e.printStackTrace();
+      throw new RuntimeException("Could not load resources");
+    }
+    return parent;
   }
 }

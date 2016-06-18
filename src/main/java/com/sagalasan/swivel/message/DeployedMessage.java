@@ -13,25 +13,27 @@
 * limitations under the License.
 */
 
-package com.sagalasan.swivel.control;
+package com.sagalasan.swivel.message;
 
-import javafx.application.Platform;
-import javafx.fxml.FXML;
-import javafx.scene.text.Text;
-
-import java.text.SimpleDateFormat;
+import io.vertx.core.json.JsonObject;
 
 /**
  * @author Christiaan Martinez
  */
-public class TimeSceneController extends Controller
+public class DeployedMessage implements JsonObjectSerializable
 {
-  @FXML
-  private Text timeText;
+  public static final String DEPLOYED = "DEPLOYED";
+
+  private boolean deployed = false;
+
+  public void setDeployed(boolean deployed)
+  {
+    this.deployed = deployed;
+  }
 
   @Override
-  public void onCurrentTimeReceived(long time)
+  public JsonObject toJson()
   {
-    Platform.runLater(() -> timeText.setText(new SimpleDateFormat("HH:mm:ss").format(time)));
+    return new JsonObject().put(DEPLOYED, deployed);
   }
 }
