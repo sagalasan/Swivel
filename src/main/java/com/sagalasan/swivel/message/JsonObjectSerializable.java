@@ -24,4 +24,5 @@ import io.vertx.core.json.JsonObject;
 public interface JsonObjectSerializable
 {
   JsonObject toJson();
+  void decodeJson(JsonObject jsonObject);
 }

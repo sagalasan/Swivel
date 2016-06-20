@@ -15,6 +15,10 @@
 
 package com.sagalasan.swivel.service;
 
+import com.sagalasan.swivel.message.Ping;
+import com.sagalasan.swivel.message.Time;
+import com.sagalasan.swivel.message.codec.PingCodec;
+import com.sagalasan.swivel.message.codec.TimeCodec;
 import io.vertx.core.*;
 
 import java.util.ArrayList;
@@ -32,8 +36,8 @@ public class ServiceVerticle extends AbstractVerticle
   @Override
   public void start(Future<Void> future)
   {
+    registerCodecs();
     verticles.add(currentTimeService);
-
     vertx.deployVerticle(currentTimeService, handler -> handleDeploy(future));
   }
 
@@ -49,5 +53,11 @@ public class ServiceVerticle extends AbstractVerticle
       if(!verticle.isDeployed()) return false;
     }
     return true;
+  }
+
+  private void registerCodecs()
+  {
+    vertx.eventBus().registerDefaultCodec(Ping.class, new PingCodec(Ping.class));
+    vertx.eventBus().registerDefaultCodec(Time.class, new TimeCodec(Time.class));
   }
 }

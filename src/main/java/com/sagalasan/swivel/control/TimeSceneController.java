@@ -34,4 +34,10 @@ public class TimeSceneController extends Controller
   {
     Platform.runLater(() -> timeText.setText(new SimpleDateFormat("HH:mm:ss").format(time)));
   }
+
+  @Override
+  public void onDeploy()
+  {
+
+  }
 }

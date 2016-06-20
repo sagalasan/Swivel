@@ -20,6 +20,10 @@ import com.google.inject.Injector;
 import com.sagalasan.swivel.control.Controller;
 import com.sagalasan.swivel.control.MainController;
 import com.sagalasan.swivel.injection.SwivelModule;
+import com.sagalasan.swivel.message.Ping;
+import com.sagalasan.swivel.message.Time;
+import com.sagalasan.swivel.message.codec.PingCodec;
+import com.sagalasan.swivel.message.codec.TimeCodec;
 import com.sagalasan.swivel.service.ServiceVerticle;
 import com.sagalasan.swivel.view.FxmlManager;
 import io.vertx.core.Vertx;
@@ -108,7 +112,16 @@ public class AppController
     Parent node = FxmlManager.loadFxml(loader, path);
     Controller controller = loader.getController();
     injector.injectMembers(controller);
-    if(currentController != null) ;
+    if(currentController != null)
+    {
+      try
+      {
+        currentController.undeploy();
+      } catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+    }
     mainController.setContentHolder(node);
     currentController = controller;
   }

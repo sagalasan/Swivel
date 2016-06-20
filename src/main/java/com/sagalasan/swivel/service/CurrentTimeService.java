@@ -14,19 +14,24 @@
 */
 package com.sagalasan.swivel.service;
 
+import com.sagalasan.swivel.message.Time;
 import io.vertx.core.Future;
+import io.vertx.core.Handler;
+import io.vertx.core.eventbus.Message;
 
 /**
  * @author Christiaan Martinez
  */
 public class CurrentTimeService extends MicroVerticle
 {
+  public static final String RECEIVE = CurrentTimeService.class.getName() + "broadcast";
   private long timerId;
 
   @Override
   public void start(Future<Void> future)
   {
-    timerId = vertx.setPeriodic(1000, handler -> vertx.eventBus().publish(this.getClass().getName(), System.currentTimeMillis()));
+    timerId = vertx.setPeriodic(1000, this::sendTime);
+    vertx.eventBus().consumer(RECEIVE, this::sendTime);
     complete(future);
   }
 
@@ -34,5 +39,20 @@ public class CurrentTimeService extends MicroVerticle
   public void stop()
   {
     vertx.cancelTimer(timerId);
+  }
+
+  private void sendTime(Message message)
+  {
+    message.reply(new Time().setTime(System.currentTimeMillis()));
+  }
+
+  private void sendTime(Long event)
+  {
+    publishTime();
+  }
+
+  private void publishTime()
+  {
+    vertx.eventBus().publish(this.getClass().getName(), new Time().setTime(System.currentTimeMillis()));
   }
 }

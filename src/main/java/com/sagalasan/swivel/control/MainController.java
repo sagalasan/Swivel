@@ -15,6 +15,7 @@
 
 package com.sagalasan.swivel.control;
 
+import io.vertx.core.AbstractVerticle;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -43,5 +44,10 @@ public class MainController extends Controller
   public void onCurrentTimeReceived(long time)
   {
     Platform.runLater(() -> clockLabel.setText(new SimpleDateFormat("HH:mm").format(time)));
+  }
+
+  @Override
+  public void onDeploy()
+  {
   }
 }
